@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}} - Quản Lý Sách Cloud (MSSV: {{studentInfo.mssv}})</title>
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="container navbar-content">
+      <a href="/" class="brand-logo">
+        <i class="fa-solid => fa-cloud-arrow-up cloud-icon"></i>
+        <span>CloudBook<small>.23IT206</small></span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-item">
+          <i class="fa-solid fa-list-check"></i> Danh Sách Sách
+        </a>
+        <a href="/books/create" class="btn btn-primary nav-btn">
+          <i class="fa-solid fa-plus"></i> Thêm Sách Mới
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner / Status Bar -->
+  <section class="status-bar">
+    <div class="container status-flex">
+      <div class="status-pill read-pill" title="Mô hình 2 connection riêng biệt">
+        <i class="fa-solid fa-database"></i> DB: <strong>DB_{{studentInfo.mssv}}</strong>
+      </div>
+      <div class="status-pill write-pill" title="Điều hướng luồng Least Privilege">
+        <i class="fa-solid fa-shield-halved"></i> Phân Quyền: <strong>Read / Write Isolated</strong>
+      </div>
+      <div class="status-pill session-pill" title="Session được lưu trực tiếp vào cloud MongoStore">
+        <i class="fa-solid fa-server"></i> Stateless Session: <strong>MongoDB Atlas (Views: {{sessionViews}})</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="container main-content">
+    {{{body}}}
+  </main>
+
+  <!-- Mandatory Required Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-info">
+        <p class="mandatory-footer-text">
+          <i class="fa-solid fa-graduation-cap"></i> 
+          <strong>Họ và tên:</strong> {{studentInfo.name}} | 
+          <strong>MSSV:</strong> {{studentInfo.mssv}} | 
+          <strong>Mức VAT áp dụng:</strong> {{studentInfo.vatRate}}%
+        </p>
+        <p class="footer-subtext">
+          Hệ thống Điện toán Đám mây • Phân quyền DB Least Privilege • Stateless Session Cloud • PaaS Ready
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
