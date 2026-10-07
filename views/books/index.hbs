@@ -1,0 +1,106 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title"><i class="fa-solid fa-books"></i> Quản Lý Sách Trên Điện Toán Đám Mây</h1>
+    <p class="page-subtitle">Dữ liệu được điều hướng và truy vấn qua <strong>Tài khoản Read-Only</strong> trên MongoDB Atlas.</p>
+  </div>
+  <a href="/books/create" class="btn btn-emerald">
+    <i class="fa-solid fa-plus-circle"></i> Thêm Sách Mới (Tiền tố {{studentInfo.last3Digits}})
+  </a>
+</div>
+
+{{#if successMsg}}
+  <div class="alert alert-success">
+    <i class="fa-solid fa-circle-check"></i> {{successMsg}}
+  </div>
+{{/if}}
+
+{{#if errorMsg}}
+  <div class="alert alert-danger">
+    <i class="fa-solid fa-triangle-exclamation"></i> {{errorMsg}}
+  </div>
+{{/if}}
+
+<!-- Feature Summary Card -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon icon-blue"><i class="fa-solid fa-book-bookmark"></i></div>
+    <div class="stat-info">
+      <span class="stat-label">Tổng Số Sách Đang Lưu Trữ</span>
+      <span class="stat-value">{{totalBooks}} cuốn</span>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon icon-purple"><i class="fa-solid fa-percent"></i></div>
+    <div class="stat-info">
+      <span class="stat-label">Công Thức VAT Thuế Động</span>
+      <span class="stat-value">{{studentInfo.vatRate}}% <small>(MSSV {{studentInfo.mssv}}: {{studentInfo.lastDigit}} + 6)</small></span>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon icon-emerald"><i class="fa-solid fa-filter"></i></div>
+    <div class="stat-info">
+      <span class="stat-label">Bộ Lọc Tiền Tố Bắt Buộc</span>
+      <span class="stat-value"><strong>{{studentInfo.last3Digits}}</strong>-XXX</span>
+    </div>
+  </div>
+</div>
+
+<!-- Books Grid / Table -->
+<div class="card card-table">
+  <div class="card-header">
+    <h3><i class="fa-solid fa-table-list"></i> Danh Sách Sản Phẩm Từ Cloud DB (Read-Only Node)</h3>
+    <span class="badge badge-info"><i class="fa-solid fa-lock"></i> Connection: Read-Only User</span>
+  </div>
+  
+  <div class="card-body">
+    {{#if books.length}}
+      <div class="table-responsive">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Mã Sản Phẩm (Mã Sách)</th>
+              <th>Tên Sách</th>
+              <th>Tác Giả</th>
+              <th>Giá Gốc (VND)</th>
+              <th>Mức VAT (%)</th>
+              <th>Giá Sau Thuế VAT (VND)</th>
+              <th>Thể Loaị</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each books}}
+              <tr>
+                <td>{{@index}}</td>
+                <td>
+                  <span class="badge badge-code">
+                    <i class="fa-solid fa-barcode"></i> {{this.bookCode}}
+                  </span>
+                </td>
+                <td class="font-weight-bold">{{this.title}}</td>
+                <td><i class="fa-regular fa-user"></i> {{this.author}}</td>
+                <td>{{this.price}} VNĐ</td>
+                <td><span class="badge badge-vat">+{{this.vatRate}}%</span></td>
+                <td>
+                  <strong class="text-emerald">{{this.priceWithVAT}} VNĐ</strong>
+                </td>
+                <td><span class="badge badge-category">{{this.category}}</span></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{else}}
+      <div class="empty-state">
+        <i class="fa-solid fa-folder-open empty-icon"></i>
+        <h3>Chưa Có Sách Nào Được Lưu Trữ Trực Tuyến</h3>
+        <p>Hệ thống chưa ghi nhận sách nào bắt đầu bằng tiền tố <strong>{{studentInfo.last3Digits}}</strong>.</p>
+        <a href="/books/create" class="btn btn-primary mt-3">
+          <i class="fa-solid fa-plus"></i> Thêm Sách Mới Ngay
+        </a>
+      </div>
+    {{/if}}
+  </div>
+</div>

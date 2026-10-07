@@ -1,0 +1,141 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title"><i class="fa-solid fa-plus-circle"></i> Thêm Sách Mới Lên Cloud</h1>
+    <p class="page-subtitle">Thao tác này sẽ tự động điều hướng luồng ghi qua <strong>Tài khoản Write</strong> trên MongoDB Atlas.</p>
+  </div>
+  <a href="/" class="btn btn-secondary">
+    <i class="fa-solid fa-arrow-left"></i> Quay Lại Danh Sách
+  </a>
+</div>
+
+<div class="create-grid">
+  <!-- Create Form Card -->
+  <div class="card card-form">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-file-signature"></i> Nhập Thông Tin Sách Mới</h3>
+      <span class="badge badge-success"><i class="fa-solid fa-pen-to-square"></i> Luồng Ghi: Write Account</span>
+    </div>
+
+    <div class="card-body">
+      <form action="/books/create" method="POST" class="form-layout">
+
+        <!-- Input Mã Sách -->
+        <div class="form-group">
+          <label for="bookCode" class="form-label">
+            Mã Sách / Mã Sản Phẩm <span class="required">*</span>
+            <small class="label-help">(Bắt buộc bắt đầu bằng tiền tố <strong>{{last3Digits}}</strong>)</small>
+          </label>
+          <div class="input-icon-wrapper">
+            <i class="fa-solid fa-barcode input-icon"></i>
+            <input 
+              type="text" 
+              id="bookCode" 
+              name="bookCode" 
+              class="form-control" 
+              placeholder="Ví dụ: {{last3Digits}}-SACH-01" 
+              required
+            />
+          </div>
+          <p class="form-hint">
+            <i class="fa-solid fa-shield"></i> Bộ lọc an ninh: Nếu không có tiền tố <strong>{{last3Digits}}</strong>, hệ thống sẽ từ chối xử lý.
+          </p>
+        </div>
+
+        <!-- Input Tên Sách & Tác Giả -->
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="title" class="form-label">Tên Sách <span class="required">*</span></label>
+            <div class="input-icon-wrapper">
+              <i class="fa-solid fa-book input-icon"></i>
+              <input type="text" id="title" name="title" class="form-control" placeholder="Nhập tên sách..." required />
+            </div>
+          </div>
+
+          <div class="form-group col-6">
+            <label for="author" class="form-label">Tác Giả <span class="required">*</span></label>
+            <div class="input-icon-wrapper">
+              <i class="fa-solid fa-user-pen input-icon"></i>
+              <input type="text" id="author" name="author" class="form-control" placeholder="Tên tác giả..." required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Giá Gốc & Thể Loại -->
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="price" class="form-label">Giá Gốc (VND) <span class="required">*</span></label>
+            <div class="input-icon-wrapper">
+              <i class="fa-solid fa-money-bill-wave input-icon"></i>
+              <input 
+                type="number" 
+                id="price" 
+                name="price" 
+                class="form-control" 
+                placeholder="Ví dụ: 150000" 
+                min="0" 
+                step="1000"
+                required 
+              />
+            </div>
+          </div>
+
+          <div class="form-group col-6">
+            <label for="category" class="form-label">Thể Loại</label>
+            <div class="input-icon-wrapper">
+              <i class="fa-solid fa-tags input-icon"></i>
+              <input type="text" id="category" name="category" class="form-control" placeholder="Ví dụ: Điện toán đám mây" value="Điện toán đám mây" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Mô Tả -->
+        <div class="form-group">
+          <label for="description" class="form-label">Mô Tả Chi Tiết</label>
+          <textarea id="description" name="description" class="form-control" rows="3" placeholder="Nhập tóm tắt nội dung sách..."></textarea>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Lưu Sách Lên Cloud MongoDB
+          </button>
+          <a href="/" class="btn btn-light btn-lg">Hủy Bỏ</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Info Sidebar Card -->
+  <div class="sidebar-info">
+    <div class="card card-sidebar">
+      <div class="card-header">
+        <h3><i class="fa-solid fa-calculator"></i> Thuật Toán VAT Cá Nhân Hóa</h3>
+      </div>
+      <div class="card-body">
+        <div class="vat-box">
+          <span class="vat-title">Công thức tính thuế suất:</span>
+          <div class="vat-formula">
+            VAT = (Chữ số cuối MSSV + 6)%
+          </div>
+          <div class="vat-calc">
+            Với MSSV <strong>{{studentInfo.mssv}}</strong> (Chữ số cuối là <strong>{{studentInfo.lastDigit}}</strong>):<br>
+            <strong>VAT = {{studentInfo.lastDigit}} + 6 = <span class="highlight-vat">{{vatRate}}%</span></strong>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="rule-box">
+          <h4><i class="fa-solid fa-circle-info"></i> Quy tắc hệ thống:</h4>
+          <ul>
+            <li>Mã sách bắt buộc chứa tiền tố <strong>{{last3Digits}}</strong> ở đầu.</li>
+            <li>Hệ thống tự động nhân thuế <strong>{{vatRate}}%</strong> để tính giá sau thuế trước khi ghi vào Cloud.</li>
+            <li>Luồng thêm mới được ghi bằng <strong>Tài khoản Write</strong> đạt chuẩn Least Privilege.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
