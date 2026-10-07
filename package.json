@@ -1,0 +1,32 @@
+{
+  "name": "cloudmidletest_23it206",
+  "version": "1.0.0",
+  "description": "Cloud Book Management System - Midterm Cloud Computing Project (MSSV: 23IT206)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "express",
+    "mongodb-atlas",
+    "handlebars",
+    "cloud-computing",
+    "least-privilege",
+    "stateless-session"
+  ],
+  "author": "MSSV: 23IT206",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "connect-mongo": "^6.0.0",
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "express-handlebars": "^9.0.2",
+    "express-session": "^1.19.0",
+    "mongoose": "^9.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
